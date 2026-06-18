@@ -1,0 +1,28 @@
+name: "Verilator Lint Action"
+
+description: "Run Verilator lint on SystemVerilog files"
+
+inputs:
+  files:
+    description: "Space separated list of .sv files"
+    required: true
+
+  severity:
+    description: "Lint severity"
+    required: false
+    default: "warning"
+
+outputs:
+  result:
+    description: "Lint results in JSON"
+
+runs:
+  using: "composite"
+
+  steps:
+    - shell: bash
+      run: |
+        python3 ${{ github.action_path }}/lint.py \
+          "${{ inputs.files }}" \
+          "${{ inputs.severity }}"
+
